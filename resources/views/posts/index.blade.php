@@ -4,6 +4,52 @@
 
 @section('content')
 
+<style>
+.modal-container{
+    /* display: none; */
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0,0,0,0.3);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease-out;
+}
+
+.show{
+    pointer-events: auto;
+    opacity: 1;
+}
+
+
+.modal{
+    background-color: white;
+    margin: auto auto;
+    height: 30%;
+    padding: 3rem 5rem;
+    border-radius: 1rem;
+    box-shadow: 0.5rem 0.5rem 2rem rgba(0,0,0,0.2);
+    text-align: center;
+    z-index: 99;
+    display: block;
+    justify-self: center;
+}
+
+.modal p{
+    font-size: 1.5rem;
+    opacity: 0.7;
+    margin-bottom: 1rem;
+}
+
+
+
+</style>
 <div class="container text-center my-3">
     <x-Button type="success" value="Create" id="" route="{{ route('posts.create') }}" />
 </div>
@@ -38,30 +84,15 @@
           <a class="btn btn-danger">Delete</a>
         </form>
 
-        <!-- Button trigger modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModaaal">
-        View       
-        </button>
-
         <!-- Modal -->
-        <div class="modal fade" id="exampleModaaal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">{{ $post->title }}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-              {{ $post->description }}
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-secondary " data-dismiss="modal">Close</button>
-              </div>
-            </div>
+        <button id="modalBtn{{ $post->id }}" class="btn btn-primary modal-btn">View Modal</button>
+        <div id="modal{{ $post->id }}" class="modal-container">
+          <div class="modal">
+            <h3>{{ $post->title }}</h3>
+            <p>{{ $post->description }}</p>
+            <button class="btn btn-secondary modal-close-btn">Close</button>
           </div>
-</div>
+        </div>
       </td>
     </tr>
     @endforeach
@@ -86,10 +117,18 @@ delBtns.forEach(delBtn => {
   });
 });
 
-$('#myModal').on('shown.bs.modal', function () {
-  $('#myInput').trigger('focus')
+const modalBtns = Array.from(document.getElementsByClassName("modal-btn"));
+modalBtns.forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.target.parentElement.children[4].classList.add("show");
+  })
 })
 
-
+const modalCloseBtns = Array.from(document.getElementsByClassName("modal-close-btn"));
+modalCloseBtns.forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.target.parentElement.parentElement.classList.remove("show");
+  })
+})
 </script>
 @endsection
