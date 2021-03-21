@@ -3,6 +3,7 @@
 @section('title') {{ $post['title'] }} @endsection
 <?php
 use Carbon\Carbon;
+
 ?>
 
 @section('content')
@@ -12,8 +13,8 @@ use Carbon\Carbon;
     Post Info
   </div>
   <div class="card-body">
-    <h5 class="card-title">{{ $post['title'] }}</h5>
-    <p class="card-text">{{ $post['description'] }}</p>
+    <h5 class="card-title">{{ $post->title }}</h5>
+    <p class="card-text">{{ $post->description }}</p>
   </div>
 </div>
 
@@ -23,13 +24,13 @@ use Carbon\Carbon;
   </div>
   <div class="card-body">
     <p class="card-text">
-        <b>Name:</b> {{ $post['user']['name'] }}
+        <b>Name:</b> {{ $post->user ? $post->user->name : 'Unknown User' }}
     </p>
     <p class="card-text">
-        <b>Email:</b> {{ $post['user']['email'] }}
+        <b>Email:</b> {{ $post->user ? $post->user->email : '' }}
     </p>
     <p class="card-text">
-        <b>Created at:</b> {{ Carbon::parse($post['created_at'])->format("g: i a l jS F Y") }}
+        <b>Created at:</b> {{ Carbon::parse($post->created_at)->format(" l jS F Y g:i a") }}
     </p>
   </div>
 </div>

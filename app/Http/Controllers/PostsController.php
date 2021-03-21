@@ -2,47 +2,61 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
 
 class PostsController extends Controller
 {
-    private $allPosts = [
-        ["id" => "1", "Title" => "Blog Post1", "User" => ["name" => "Omar Yehia"], "Created_at" => "2021-02-05"],
-        ["id" => "2", "Title" => "Blog Post2", "User" => ["name" => "Omar Yehia"], "Created_at" => "2021-02-06"],
-        ["id" => "2", "Title" => "Blog Post3", "User" => ["name" => "Omar Yehia"], "Created_at" => "2021-02-07"],
-    ];
-
-    public function index() {
-        return view('posts.index', [ "posts" => $this->allPosts ]);
+    public function index()
+    {
+        $allPosts = Post::paginate(20);
+        return view('posts.index', [ "posts" => $allPosts ]);
     }
 
-    public function show($postID) {
-        $post = ["id" => "1", "description" => "This is the first blog post on this website", "title" => "Blog Post1", "user" => ["name" => "Omar Yehia", "email" => "Omar@omar.com"], "created_at" => "2021-02-05"];
+    public function show($postID)
+    {
+        $post =  Post::find($postID);
         return view('posts.show', ["post" => $post]);
     }
 
-    public function create() {
-        return view("posts.create");
+    public function create()
+    {
+        $users = User::all();
+        return view("posts.create", [ 'users' => $users ]);
     }
 
-    public function store() {
+    public function store(Request $request)
+    {
+        $post = new Post;
+        $post->title = $request->title;
+        $post->user_id = $request->user_id;
+        $post->description = $request->description;
+        $post->save();
+
         return redirect()->route("posts.index");
     }
 
-    public function edit($postID) {
-        $post = ["id" => "1", "description" => "This is the first blog post on this website", "title" => "Blog Post1", "user" => ["name" => "Omar Yehia", "email" => "Omar@omar.com"], "created_at" => "2021-02-05"];
-        return view('posts.edit', [ "post" => $post ]);
-        
+    public function edit($postID)
+    {
+        $post =  Post::find($postID);
+        $users = User::all();
+        return view('posts.edit', [ "post" => $post, 'users' => $users ]);
     }
 
-    public function update($postID) {
-        $post = ["id" => "1", "description" => "This is the first blog post on this website", "title" => "Blog Post1", "user" => ["name" => "Omar Yehia", "email" => "Omar@omar.com"], "created_at" => "2021-02-05"];
+    public function update($postID, Request $request)
+    {
+        $post =  Post::find($postID);
+        $post->title = $request->title;
+        $post->user_id = $request->user_id;
+        $post->description = $request->description;
+        $post->save();
         return redirect()->route("posts.index");
-        
     }
 
-    public function destroy($postID) {
+    public function destroy($postID)
+    {
+        Post::destroy($postID);
         return redirect()->route("posts.index");
     }
 }
