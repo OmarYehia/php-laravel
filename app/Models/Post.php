@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Comment;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,5 +26,10 @@ class Post extends Model
     public function date_without_time()
     {
         return Carbon::parse($this->created_at)->format("Y-m-d");
+    }
+
+    public function comment()
+    {
+        return $this->morphMany(Comment::class, 'comment');
     }
 }
