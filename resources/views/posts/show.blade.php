@@ -1,10 +1,6 @@
 @extends('layouts.app')
 
 @section('title') {{ $post['title'] }} @endsection
-<?php
-use Carbon\Carbon;
-
-?>
 
 @section('content')
 <div class="container">
@@ -30,7 +26,7 @@ use Carbon\Carbon;
         <b>Email:</b> {{ $post->user ? $post->user->email : '' }}
     </p>
     <p class="card-text">
-        <b>Created at:</b> {{ Carbon::parse($post->created_at)->format(" l jS F Y g:i a") }}
+        <b>Created at:</b> {{ $post->human_readable_date() }}
     </p>
   </div>
 </div>
