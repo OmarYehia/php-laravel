@@ -59,4 +59,16 @@ class PostsController extends Controller
         Post::destroy($postID);
         return redirect()->route("posts.index");
     }
+
+    public function restoreDeleted()
+    {
+        $allPosts = Post::withTrashed()
+            ->get();
+        foreach ($allPosts as $post) {
+            if ($post->trashed()) {
+                $post->restore();
+            }
+        }
+        return redirect()->route("posts.index");
+    }
 }

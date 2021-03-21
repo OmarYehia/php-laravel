@@ -52,6 +52,7 @@
 </style>
 <div class="container text-center my-3">
     <x-Button type="success" value="Create" id="" route="{{ route('posts.create') }}" />
+    <x-Button type="info" value="Restore Deleted" id="" route="{{ route('posts.restore') }}" />
 </div>
 
 <div class="container">
