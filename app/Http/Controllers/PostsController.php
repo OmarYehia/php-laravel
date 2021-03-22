@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePostRequest;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -27,7 +28,7 @@ class PostsController extends Controller
         return view("posts.create", [ 'users' => $users ]);
     }
 
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
         $post = new Post;
         $post->title = $request->title;
@@ -45,7 +46,7 @@ class PostsController extends Controller
         return view('posts.edit', [ "post" => $post, 'users' => $users ]);
     }
 
-    public function update($postID, Request $request)
+    public function update($postID, StorePostRequest $request)
     {
         $post =  Post::find($postID);
         $post->title = $request->title;
