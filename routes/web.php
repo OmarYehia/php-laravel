@@ -28,6 +28,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::put("/posts/{post}", [PostsController::class, "update"])->name("posts.update");
     Route::delete("/posts/{post}", [PostsController::class, "destroy"])->name("posts.destroy");
     Route::post("/comments", [CommentsController::class, "store"])->name("comments.store");
+    Route::get("/posts/ajax/{post}", [PostsController::class, "ajax"])->name("posts.ajax");
 });
 
 Auth::routes();

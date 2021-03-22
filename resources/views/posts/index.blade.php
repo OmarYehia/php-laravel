@@ -5,8 +5,8 @@
 @section('content')
 
 <style>
-.modal-container{
-    /* display: none; */
+/* .modal-container{
+    display: none; 
     position: fixed;
     top: 0;
     left: 0;
@@ -45,7 +45,7 @@
     font-size: 1.5rem;
     opacity: 0.7;
     margin-bottom: 1rem;
-}
+} */
 
 
 
@@ -88,12 +88,29 @@
         </form>
 
         <!-- Modal -->
-        <button id="modalBtn{{ $post->id }}" class="btn btn-primary modal-btn">View Modal</button>
+        <!-- <button id="modalBtn{{ $post->id }}" class="btn btn-primary modal-btn">View Modal</button>
         <div id="modal{{ $post->id }}" class="modal-container">
           <div class="modal">
             <h3>{{ $post->title }}</h3>
             <p>{{ $post->description }}</p>
             <button class="btn btn-secondary modal-close-btn">Close</button>
+          </div>
+        </div> -->
+
+        <!-- Another Modal -->
+        <button type="button" class="btn btn-primary ajax-btn" data-toggle="modal" data-target="view-ajax" data-ajax="{{ $post->id }}">View Modal</button>
+        <div id="view_ajax" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <h4 class="modal-title">view post</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+              </div>
+              <div class="modal-body" id="modal_content">
+                
+              </div>
+            </div>
           </div>
         </div>
       </td>
@@ -105,6 +122,8 @@
             {!! $posts->links() !!}
         </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  
 <script>
 const delBtns = Array.from(document.getElementsByClassName('btn btn-danger'));
 delBtns.forEach(delBtn => {
@@ -133,5 +152,23 @@ modalCloseBtns.forEach(btn => {
     e.target.parentElement.parentElement.classList.remove("show");
   })
 })
+
+
+// Second modal approach -- Ajax
+const ajaxModalBtns = Array.from(document.getElementsByClassName('ajax-btn'));
+const modalBody = document.querySelector('#modal_content');
+const modal = document.querySelector('.modal');
+ajaxModalBtns.forEach(modalBtn => {
+  modalBtn.addEventListener('click', async e => {
+    console.log(e.target.getAttribute('data-ajax'));
+    const res = await fetch(`/posts/ajax/${e.target.getAttribute('data-ajax')}`);
+
+    const html = await res.text();
+    modalBody.innerHTML = html;
+    $('#view_ajax').modal('show')
+  });
+});
+
+
 </script>
 @endsection

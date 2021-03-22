@@ -86,4 +86,10 @@ class PostsController extends Controller
         }
         return redirect()->route("posts.index");
     }
+
+    public function ajax($postID)
+    {
+        $post = Post::find($postID);
+        return view('posts.ajax', compact('post'));
+    }
 }

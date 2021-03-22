@@ -20,6 +20,10 @@
       <input name="title" type="text" class="form-control" id="title" aria-describedby="emailHelp">
     </div>
     <div class="form-group">
+      <label for="title">Tags</label>
+      <input name="tags" type="text" class="form-control" id="title" aria-describedby="emailHelp">
+    </div>
+    <div class="form-group">
       <label for="description">Description</label>
       <textarea name="description" class="form-control" id="description"> </textarea>
     </div>
