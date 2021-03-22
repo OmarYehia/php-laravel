@@ -21,7 +21,11 @@ Route::post("posts", [PostsController::class, "store"])->name("posts.store");
 Route::get("/posts/restore", [PostsController::class, "restoreDeleted"])->name("posts.restore");
 Route::get("/posts/{post}", [PostsController::class, "show"])->name("posts.show");
 Route::get("/posts/{post}/edit", [PostsController::class, "edit"])->name("posts.edit");
-Route::patch("/posts/{post}", [PostsController::class, "update"])->name("posts.update");
+Route::put("/posts/{post}", [PostsController::class, "update"])->name("posts.update");
 Route::delete("/posts/{post}", [PostsController::class, "destroy"])->name("posts.destroy");
 
 Route::post("/comments", [CommentsController::class, "store"])->name("comments.store");
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

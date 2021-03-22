@@ -14,7 +14,7 @@
     </div>
 @endif
 <form method="POST" action="{{ route('posts.update', [ 'post' => $post['id'] ]) }}">
-   @method('patch')
+   @method('put')
    @csrf
     <div class="form-group">
       <label for="title">Title</label>
