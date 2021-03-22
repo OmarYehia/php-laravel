@@ -66,6 +66,7 @@
       <th scope="col">Title</th>
       <th scope="col">Posted by</th>
       <th scope="col">Created at</th>
+      <th scope="col">Slug</th>
       <th scope="col">Actions</th>
     </tr>
   </thead>
@@ -76,6 +77,7 @@
       <td>{{ $post->title }}</td>
       <td>{{ $post->user ? $post->user->name : 'Unkown User' }}</td>
       <td>{{ $post->date_without_time() }}</td>
+      <td>{{ $post->slug }}</td>
       <td>
         <x-Button type="info" value="View" id="{{ $post->id }}" route="{{ route('posts.show', [ 'post' => $post['id'] ]) }}" />
         <x-Button type="secondary" value="Edit" id="{{ $post->id }}" route="{{ route('posts.edit', [ 'post' => $post['id'] ]) }}" />
