@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Database\DBAL\TimestampType;
 use Illuminate\Support\Str;
 
 return [
@@ -95,6 +96,12 @@ return [
             'connection' => 'default',
             'queue' => '{default}',
             'retry_after' => 90,
+        ],
+
+        'dbal' => [
+            'types' => [
+                'timestamp' => TimestampType::class,
+            ],
         ],
 
     ],

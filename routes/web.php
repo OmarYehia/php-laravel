@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\PostsController;
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,3 +36,9 @@ Route::group(['middleware' => ['auth']], function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/auth/redirect/github', [AuthController::class, 'redirectToProvider']);
+Route::get('/auth/callback', [AuthController::class, 'handleProviderCallback']);
+
+Route::get('/auth/redirect/google', [AuthController::class, 'redirectToGoogle']);
+Route::get('/auth/callback/google', [AuthController::class, 'handleGoogleCallback']);
